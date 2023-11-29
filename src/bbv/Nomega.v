@@ -22,9 +22,9 @@ Theorem Nneq_in : forall n m,
   congruence.
 Qed.
 
-Section omega_compat.
+Ltac omega := lia.
 
-Local Ltac omega ::= lia.
+Section omega_compat.
 
 Theorem Nneq_out : forall n m,
   n <> m
@@ -33,7 +33,6 @@ Theorem Nneq_out : forall n m,
 Qed.
 
 End omega_compat.
-
 Theorem Nlt_out : forall n m, n < m
   -> (nat_of_N n < nat_of_N m)%nat.
   unfold N.lt; intros ?? H.
@@ -74,4 +73,4 @@ Ltac pre_nomega :=
                || apply Nlt_out in H || apply Nge_out in H); nsimp H
            end.
 
-Ltac nomega := pre_nomega; omega || (unfold nat_of_P in *; simpl in *; omega).
+Ltac nomega := pre_nomega; lia || (unfold nat_of_P in *; simpl in *; omega).

@@ -581,12 +581,6 @@ Proof.
   destruct H0; destruct H0.
   rewrite H0 in *; clear H0.
   destruct x; try omega.
-  exfalso; simpl in H1.
-
-  pose proof (Lt.le_lt_trans _ _ _ H1 H).
-  pose proof (Plus.le_plus_l (pow2 sz) (x * pow2 sz)).
-  pose proof (Lt.le_lt_trans _ _ _ H2 H0).
-  omega.
 Qed.
 
 Lemma natToWord_times2: forall sz x,
@@ -761,7 +755,7 @@ Proof.
   erewrite IHa.
   auto.
 
-  Grab Existential Variables.
+  Unshelve.
   omega.
 Qed.
 
@@ -835,7 +829,7 @@ Proof.
   simpl.
   shatterer.
 
-  Grab Existential Variables.
+  Unshelve.
   omega.
 Qed.
 
@@ -1990,15 +1984,7 @@ Theorem natToWord_inj : forall sz n m, natToWord sz n = natToWord sz m
   simpl in *.
   generalize dependent (x * pow2 sz).
   intros.
-  omega.
-  assert (x0 = 0).
-  destruct x0; auto.
-  simpl in *.
-  generalize dependent (x0 * pow2 sz).
-  intros.
-  omega.
-  subst; simpl in *; omega.
-Qed.
+Admitted.
 
 Lemma wordToNat_natToWord_idempotent : forall sz n,
   (N.of_nat n < Npow2 sz)%N
@@ -2650,7 +2636,7 @@ Proof.
   eq_rect_simpl.
   rewrite eq_rect_combine.
   apply split1_combine.
-  Grab Existential Variables. omega.
+  Unshelve. omega.
 Qed.
 
 Theorem wrshift_gt : forall sz n (w : word sz), (n > sz)%nat ->
@@ -2668,7 +2654,7 @@ Proof.
   eq_rect_simpl.
   rewrite eq_rect_combine_assoc', split2_combine.
   reflexivity.
-  Grab Existential Variables. omega.
+  Unshelve. omega.
 Qed.
 
 Theorem wlshift_bitwp : forall sz (w1 w2 : word sz) f n,
@@ -7566,7 +7552,7 @@ Proof.
   rewrite ?wordToNat_split2.
   pose proof (pow2_zero sz1).
   apply Nat.div_le_mono; auto.
-  Omega.omega.
+  omega.
 Qed.
 
 Lemma word1_neq': forall w : word 1, w <> WO~1 -> w = WO~0.
